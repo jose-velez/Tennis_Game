@@ -14,7 +14,9 @@
     var ballSpeedX = 10;
     var ballSpeedY = 4;
     var paddle1Y = 250;
+    var paddle2Y = 250;
     const PADDLE_HEIGHT = 100;
+    const PADDLE_THICKNESS = 10;
 
     function calculateMousePos(evt){
       var rect = canvas.getBoundingClientRect();
@@ -35,31 +37,52 @@
           moveEverything();
           drawEverything();
         }, 1000/framesPerSecond);
-
+        // Function to move the Player Paddle
         canvas.addEventListener("mousemove",
         function(evt){
                   var mousePos = calculateMousePos(evt);
-                  console.log("mouse moving");
-                  console.log(mousePos);
                   paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
-                  console.log("mouse move function");
-                  console.log(paddle1Y);
         });
       }
 
+    function ballReset(){
+        ballSpeedX = -ballSpeedX
+        ballX = canvas.width/2;
+        ballY = canvas.height/2;
+    }
+
+    function computerMovement(){
+          if(paddle2Y < ballY){
+            paddle2Y += 6;
+          }else {
+            paddle2Y -= 6;
+          }
+    }
+
     function moveEverything(){
+      computerMovement();
       ballX = ballX + ballSpeedX;
       ballY = ballY + ballSpeedY;
       if (ballX > canvas.width) {
-        ballSpeedX = -ballSpeedX
+        if (ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT) {
+          ballSpeedX = - ballSpeedX;
+        }else {
+
+          ballReset();
+        }
       }
       if (ballX < 0) {
-        ballSpeedX = -ballSpeedX
+        if (ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT) {
+          ballSpeedX = - ballSpeedX;
+        }else {
+
+          ballReset();
+        }
       }
       if (ballY > canvas.height) {
         ballSpeedY = -ballSpeedY
       }
-      if (ballX < 0) {
+      if (ballY < 0) {
         ballSpeedY = -ballSpeedY
       }
 
@@ -68,8 +91,9 @@
       // This line blanks out the screen with black
       colorRect(0,0,canvas.width,canvas.height, "black")
       // This is the left player paddle
-      console.log(paddle1Y);
-      colorRect(0,paddle1Y,10,PADDLE_HEIGHT, "white");
+      colorRect(0,paddle1Y,PADDLE_THICKNESS,PADDLE_HEIGHT, "white");
+      // This is the right computer paddle
+      colorRect(canvas.width - PADDLE_THICKNESS,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT, "white");
       // this is the ball
       colorCirlce(ballX, ballY, 10, "white")
     }
