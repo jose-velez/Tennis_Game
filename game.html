@@ -13,6 +13,8 @@
     var ballY = 50;
     var ballSpeedX = 10;
     var ballSpeedY = 4;
+    var player1Score = 0;
+    var player2Score = 0;
     var paddle1Y = 250;
     var paddle2Y = 250;
     const PADDLE_HEIGHT = 100;
@@ -52,9 +54,10 @@
     }
 
     function computerMovement(){
-          if(paddle2Y < ballY){
+          var paddle2YCenter = paddle2Y + (PADDLE_HEIGHT/2)
+          if(paddle2YCenter < ballY-35){
             paddle2Y += 6;
-          }else {
+          }else if(paddle2YCenter > ballY+35){
             paddle2Y -= 6;
           }
     }
@@ -69,6 +72,7 @@
         }else {
 
           ballReset();
+          player1Score++
         }
       }
       if (ballX < 0) {
@@ -77,6 +81,7 @@
         }else {
 
           ballReset();
+          player2Score++;
         }
       }
       if (ballY > canvas.height) {
@@ -96,6 +101,10 @@
       colorRect(canvas.width - PADDLE_THICKNESS,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT, "white");
       // this is the ball
       colorCirlce(ballX, ballY, 10, "white")
+
+      // To write the score in the game
+      canvasContext.fillText(player1Score, 100, 100);
+      canvasContext.fillText(player2Score, canvas.width-100, 100);
     }
 
     function colorCirlce(centerX, centerY, radius, drawColor){
