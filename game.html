@@ -10,7 +10,9 @@
     var canvas;
     var canvasContext;
     var ballX = 50;
+    var ballY = 50;
     var ballSpeedX = 10;
+    var ballSpeedY = 4;
 
       window.onload = function(){
         console.log("Hello World");
@@ -25,11 +27,18 @@
 
     function moveEverything(){
       ballX = ballX + ballSpeedX;
+      ballY = ballY + ballSpeedY;
       if (ballX > canvas.width) {
         ballSpeedX = -ballSpeedX
       }
       if (ballX < 0) {
         ballSpeedX = -ballSpeedX
+      }
+      if (ballY > canvas.height) {
+        ballSpeedY = -ballSpeedY
+      }
+      if (ballX < 0) {
+        ballSpeedY = -ballSpeedY
       }
 
     }
@@ -39,7 +48,7 @@
       // This is the left player paddle
       colorRect(0,210,10,100, "white");
       // this is the ball
-      colorCirlce(ballX, 150, 10, "white")
+      colorCirlce(ballX, ballY, 10, "white")
     }
 
     function colorCirlce(centerX, centerY, radius, drawColor){
