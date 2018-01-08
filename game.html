@@ -26,6 +26,7 @@
     var showingWinScreen = false;
 
 
+
     function calculateMousePos(evt){
       var rect = canvas.getBoundingClientRect();
       var root = document.documentElement;
@@ -123,9 +124,23 @@
           colorRect(canvas.width/2-1,i,2,20, "white")
       }
     }
+
+    //// Function for the main screen
+  //  function mainScreen() {
+//
+    //  canvasContext.fillStyle = "white";
+    //  canvasContext.fillText("Tennis Game!!", 350, 200);
+    //  canvasContext.fillText("Click to Continue", 350, 500);
+    //  showinMainScreen = false;
+    //  return;
+    //}
+
+
+
     function drawEverything(){
       // This line blanks out the screen with black
       colorRect(0,0,canvas.width,canvas.height, "black")
+
 
       if (showingWinScreen) {
         canvasContext.fillStyle = "white";
@@ -137,6 +152,8 @@
         canvasContext.fillText("Click To Continue", 350, 500);
         return;
       }
+
+
       drawNet();
 
       // This is the left player paddle
